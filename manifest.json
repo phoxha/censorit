@@ -1,16 +1,29 @@
+
 {
-  "name": "censorit",
-  "version": "0.1",
-  "description": "user generated censorship",
-  "background_page": "background.html",
-  "popup": "popup.html",
-  "browser_action": {
-    "name": "Censorit?",
-    "icons": ["icon.png"],
-    "default_icon": "icon.png"
-  },
-  "content_scripts": [ {
-    "js": [ "jquery.js", "content.js" ],
-    "matches": [ "http://*/*", "https://*/*"]
-  }]
+ "name": "censorit",
+    "version": "0.0.1",
+    "manifest_version": 2,
+    "description" : "Description ...",
+    "omnibox": { "keyword" : "yeah" },
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_title": "That's the tool tip",
+        "default_popup": "popup.html"
+    },
+    "permissions": [ "storage" ],
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": false
+    },
+    "chrome_url_overrides" : {
+        "newtab": "newtab/newtab.html"
+    },
+    "content_scripts": [{
+        "matches": ["http://*/*", "https://*/*"],
+        "js": ["jquery.js", "content.js"],
+        "run_at":    "document_end"
+    }],
+    "devtools_page": "devtools/devtools.html"
 }
+
+
