@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     //sendResponse(myFunc(request.args));
 
@@ -14,6 +15,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 
+=======
+>>>>>>> parent of 72be799... push
 chrome.extension.onMessage.addListener(function(message, sender, sendResponse) {
     switch(message.type) {
         case "color-divs":

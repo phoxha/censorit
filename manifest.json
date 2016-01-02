@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "manifest_version": 2,
   "name"            : "ng-Todo",
   "description"     : "Minimal todo app for minimalist",
@@ -10,6 +11,21 @@
   },
   "background": {
         "scripts": ["app/background.js","jquery.js"],
+=======
+ "name": "censorit",
+    "version": "0.0.1",
+    "manifest_version": 2,
+    "description" : "Description ...",
+    "omnibox": { "keyword" : "yeah" },
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_title": "That's the tool tip",
+        "default_popup": "popup.html"
+    },
+    "permissions": [ "storage" ],
+    "background": {
+        "scripts": ["background.js"],
+>>>>>>> parent of 72be799... push
         "persistent": false
     },
   "permissions": [
