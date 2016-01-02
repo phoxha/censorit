@@ -11,9 +11,9 @@
         "default_title": "That's the tool tip",
         "default_popup": "popup.html"
     },
-    "permissions": [ "storage" ,"tabs"],
+    "permissions": [ "storage" ,"tabs","activeTab","declarativeContent"],
     "background": {
-        "scripts": ["background.js"],
+        "scripts": ["background.js","jquery.js"],
         "persistent": false
     },
     "chrome_url_overrides" : {

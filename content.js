@@ -7,6 +7,61 @@
 //   }
 // })
 
+// testChromeStorage();
+
+// function testChromeStorage() {  
+//     console.log("Saving");
+//     chrome.storage.sync.set({'value': theValue}, function() {
+//         message('Settings saved');
+//     });
+//     chrome.storage.sync.get("value", function (retVal) {
+//             console.log("Got it? " + retVal.value);
+//     });
+// }
+
+
+function updateKeywords(d) {
+    
+    var storage = chrome.storage.sync;
+
+        var myTestVar = 'Keyword';
+        var resultvalue = {};
+        var obj= {};
+        var objPrev= {};
+
+        var objIsEmpty= {};
+        //obj[myTestVar] = d;
+        var oldvalue="";
+        storage.get(myTestVar,function(result){
+                  //objPrev[myTestVar]=result;
+                  objIsEmpty=result;
+                  //console output = myVariableKeyName {myTestVar:'my test var'}
+                });
+        
+         if(!jQuery.isEmptyObject(objIsEmpty))
+         {
+            objPrev = objIsEmpty;
+            objPrev[myTestVar].push({name:d, status:"1"});
+         }
+         else
+         {
+            objPrev[myTestVar] = [{name:d, status:"1"}];
+         }
+        
+        storage.set(objPrev);
+
+        
+        storage.get(myTestVar,function(result){
+          objPrev = result;
+        });
+
+        var par = "";
+          objPrev[myTestVar].forEach(function(entry) {
+            par += entry.name + " " + entry.status + ", ";
+        });
+    return par;
+};
+
 chrome.extension.onMessage.addListener(function(message, sender, sendResponse) {
     switch(message.type) {
         case "color-divs":

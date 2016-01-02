@@ -1,160 +1,214 @@
+document.addEventListener('DOMContentLoaded', function() {
+  var checkPageButton = document.getElementById('set');
+  checkPageButton.addEventListener('click', function() {
+    chrome.tabs.getSelected(null, function(tab) {
+	 d = document;
 
-
-window.onload = function() {
-
-setColor();
-
-function setColor(){
-	document.body.style.backgroundColor='lightgreen';
-	alert ("The document has been loaded.");
-}
-
-
-	// // popup.js
-	// document.body.onload = function() {
-	// 	alert("get");
-	//   chrome.storage.local.get("data", function(items) {
-	//     if (!chrome.runtime.error) {
-	//       console.log(items);
-	//       document.getElementById("data").innerText = items.data;
-	//     }
-	//     else
-	//     {
-	//     	alert("got it!");
-	//     }
-	//   });
-	// }
-	
-	document.getElementById("clear").onclick = function() {
-
-		chrome.storage.local.clear()
-		var storage = chrome.storage.local;
-		var	prevArray = [];
-		var myTestVar = 'Keyword';
-		var obj= {};
-		prevArray =[{name:"test", status:"1"}];
-
-		obj[myTestVar]=prevArray;
-		storage.set(obj);
-
-
-		document.getElementById("settings").innerHTML="";
-	}
-
-	document.getElementById("set").onclick = function() {
-
-		//alert("1");
-		var storage = chrome.storage.local;
-		//chrome.storage.local.clear()
-		var d = document.getElementById("text").value;
+	//       var f = d.createElement('form');
+	//       f.action = 'http://gtmetrix.com/analyze.html?bm';
+	//       f.method = 'post';
+	//       var i = d.createElement('input');
+	//       i.type = 'hidden';
+	//       i.name = 'url';
+	//       i.value = tab.url;
+	//       f.appendChild(i);
+	//       d.body.appendChild(f);
+	//       f.submit();
+	var storage = chrome.storage.sync;
+	var data = d.getElementById("text").value;
 		var myTestVar = 'Keyword';
 		var resultvalue = {};
 		var obj= {};
 		var objPrev= {};
-		
+
+		var objIsEmpty= {};
 		//obj[myTestVar] = d;
 		var oldvalue="";
 		storage.get(myTestVar,function(result){
 				  //objPrev[myTestVar]=result;
-				  objPrev=result;
+				  objIsEmpty=result;
 				  //console output = myVariableKeyName {myTestVar:'my test var'}
 				});
-		//populate
-		var	prevArray = [];
-		//prevArray =[{name:"test", status:"1"}];
 		
-		 // if(jQuery.isEmptyObject(objPrev))
-		 // {
-			
-		 // }
-		 // else{
-		 	prevArray = objPrev[myTestVar];
-		 	//}
-		
-		
-		//var text = [];
+		chrome.storage.sync.get(null, function(items) {
+		    //var allKeys = Object.keys(items);
+		    console.log(items);
+		});
 
-		prevArray.push({name:d, status:"1"});
-		obj[myTestVar]=prevArray;
-
-		//clear storage
-		//obj= {};
-		storage.set(obj);
+		 if(!jQuery.isEmptyObject(objIsEmpty))
+		 {
+			objPrev = objIsEmpty;
+			objPrev[myTestVar].push({name:data, status:"1"});
+		 }
+		 else
+		 {
+			objPrev[myTestVar] = [{name:data, status:"1"}];
+		 }
+		storage.clear()
+		storage.set(objPrev);
 
 		
 		storage.get(myTestVar,function(result){
-		  //alert(myTestVar,result);
-		  prevArray = objPrev[myTestVar];
+		  objPrev = result;
 		});
+		
 		var par = "";
-		  prevArray.forEach(function(entry) {
+		  objPrev[myTestVar].forEach(function(entry) {
 		    par += entry.name + " " + entry.status + ", ";
 		});
+		
+		$( ".settings" ).text( par );
 
-		  document.getElementById("settings").innerHTML = par;
+    });
+  }, false);
+}, false);
+
+// //window.onload = function() {
+
+// 	//getSettings();
+
+// 	function getSettings(){
+
+// 		var storage = chrome.storage.sync;
+// 		var myTestVar = 'Keyword';
+// 		var resultvalue = {};
+// 		var obj= {};
+// 		var objPrev= {};
+// 		//obj[myTestVar] = d;
+// 		var oldvalue="";
+// 		storage.get(myTestVar,function(result){
+// 				  //objPrev[myTestVar]=result;
+// 				  objPrev=result;
+// 				  //console output = myVariableKeyName {myTestVar:'my test var'}
+// 				});
+		
+// 		 if(!jQuery.isEmptyObject(objPrev))
+// 		 {
+
+// 			var par = "";
+// 			  objPrev[myTestVar].forEach(function(entry) {
+// 			    par += entry.name + " " + entry.status + ", ";
+// 			    console.log(par);
+// 			});
+
+// 		  	//document.getElementById("settings").innerHTML = par;
+// 		  	$( ".settings" ).text( par );
+
+// 		}
+// 	}
+	
+// 	document.getElementById("clear").onclick = function() {
+
+// 		chrome.storage.sync.clear()
+// 		document.getElementById("settings").innerHTML="";
+// 	}
+
+// 	document.getElementById("set").onclick = function() {
 
 
 
-		// var storage = chrome.storage.local;
-	 //  var d = document.getElementById("text").value;
-	 //  //alert(d);
-	 //  storage.set({ "data" : d }, function() {
-	 //  	alert("saved!11");
-	 //    if (chrome.runtime.error) {
-	 //      console.log("Runtime error.");
-	 //    }
-	 //    else
-	 //    {
-	 //    	alert("saved!");
-	 //    }
-	 //  });
-	 //  window.close();
-	}
+// 		//alert("1");
+// 		var storage = chrome.storage.sync;
+// 		//chrome.storage.local.clear()
+// 		var d = document.getElementById("text").value;
+		
+// 		//var par =chrome.extension.getBackgroundPage().updateKeywords(d);
+		
+// 		chrome.tabs.getSelected(null, function(tab) {
+// 		    chrome.tabs.sendRequest(tab.id, {greeting: "hello"}, function(response) {
+// 		       alert(response.farewell);
+// 		    });
+// 		   });
 
-	//old script
-    document.getElementById("button").onclick = function() {
-        chrome.extension.sendMessage({
-            type: "color-divs"
-        });
-    }
+// 		var myTestVar = 'Keyword';
+// 		var resultvalue = {};
+// 		var obj= {};
+// 		var objPrev= {};
 
-    document.getElementById("btnTrump").onclick = function() {
-        chrome.extension.sendMessage({
-            type: "clear-trump"
-        });
-    }
+// 		var objIsEmpty= {};
+// 		//obj[myTestVar] = d;
+// 		var oldvalue="";
+// 		storage.get(myTestVar,function(result){
+// 				  //objPrev[myTestVar]=result;
+// 				  objIsEmpty=result;
+// 				  //console output = myVariableKeyName {myTestVar:'my test var'}
+// 				});
+		
+// 		chrome.storage.sync.get(null, function(items) {
+// 		    var allKeys = Object.keys(items);
+// 		    console.log(allKeys);
+// 		});
 
-  //   document.getElementById("save").onclick = function() {
-		// // Get a value saved in a form.
-  //       //var theValue = textarea.value;
-  //       var theValue = document.getElementById("txt_name").value;//$('#txt_name').val();
-  //       alert(theValue);
-  //       // Check that there's some code there.
-  //       if (!theValue) {
-  //         message('Error: No value specified');
-  //         return;
-  //       }
+// 		 if(!jQuery.isEmptyObject(objIsEmpty))
+// 		 {
+// 			objPrev = objIsEmpty;
+// 			objPrev[myTestVar].push({name:d, status:"1"});
+// 		 }
+// 		 else
+// 		 {
+// 			objPrev[myTestVar] = [{name:d, status:"1"}];
+// 		 }
+// 		storage.clear()
+// 		storage.set(objPrev);
+
+		
+// 		storage.get(myTestVar,function(result){
+// 		  objPrev = result;
+// 		});
+		
+// 		var par = "";
+// 		  objPrev[myTestVar].forEach(function(entry) {
+// 		    par += entry.name + " " + entry.status + ", ";
+// 		});
+		
+// 		$( ".settings" ).text( par );
+// 		//  document.getElementById("settings").innerHTML = par;
+// 	}
+
+// 	// //old script
+//  //    document.getElementById("button").onclick = function() {
+//  //        chrome.extension.sendMessage({
+//  //            type: "color-divs"
+//  //        });
+//  //    }
+
+//  //    document.getElementById("btnTrump").onclick = function() {
+//  //        chrome.extension.sendMessage({
+//  //            type: "clear-trump"
+//  //        });
+//  //    }
+
+//   //   document.getElementById("save").onclick = function() {
+// 		// // Get a value saved in a form.
+//   //       //var theValue = textarea.value;
+//   //       var theValue = document.getElementById("txt_name").value;//$('#txt_name').val();
+//   //       alert(theValue);
+//   //       // Check that there's some code there.
+//   //       if (!theValue) {
+//   //         message('Error: No value specified');
+//   //         return;
+//   //       }
         
 
-  //   }
+//   //   }
 
-    function saveChanges() {
+//     // function saveChanges() {
 
-        // Get a value saved in a form.
-        //var theValue = textarea.value;
-        var theValue = $('#txt_name').val();
-        alert(theValue);
-        // Check that there's some code there.
-        if (!theValue) {
-          message('Error: No value specified');
-          return;
-        }
-        // Save it using the Chrome extension storage API.
-        chrome.storage.sync.set({'value': theValue}, function() {
-          // Notify that we saved.
-          message('Settings saved');
-        });
-      }
+//     //     // Get a value saved in a form.
+//     //     //var theValue = textarea.value;
+//     //     var theValue = $('#txt_name').val();
+//     //     alert(theValue);
+//     //     // Check that there's some code there.
+//     //     if (!theValue) {
+//     //       message('Error: No value specified');
+//     //       return;
+//     //     }
+//     //     // Save it using the Chrome extension storage API.
+//     //     chrome.storage.sync.set({'value': theValue}, function() {
+//     //       // Notify that we saved.
+//     //       message('Settings saved');
+//     //     });
+//     //   }
 
 
-}
+// //}
