@@ -1,30 +1,29 @@
-
 {
- "name": "censorit",
-    "version": "0.0.1",
-    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-    "manifest_version": 2,
-    "description" : "Description ...",
-    "omnibox": { "keyword" : "yeah" },
-    "browser_action": {
-        "default_icon": "icon.png",
-        "default_title": "That's the tool tip",
-        "default_popup": "popup.html"
-    },
-    "permissions": [ "storage" ,"tabs","activeTab","declarativeContent"],
-    "background": {
-        "scripts": ["background.js","jquery.js"],
+  "manifest_version": 2,
+  "name"            : "ng-Todo",
+  "description"     : "Minimal todo app for minimalist",
+  "short_name"      : "ng-Todo",
+  "version"         : "0.1",
+  "browser_action": {
+    "default_popup": "index.html",
+    "default_icon" : "images/logo.png"
+  },
+  "background": {
+        "scripts": ["app/background.js","jquery.js"],
         "persistent": false
     },
-    "chrome_url_overrides" : {
-        "newtab": "newtab/newtab.html"
-    },
-    "content_scripts": [{
+  "permissions": [
+    "debugger",
+    "storage",
+    "tabs",
+    "activeTab",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "content_scripts": [{
         "matches": ["http://*/*", "https://*/*"],
         "js": ["jquery.js", "content.js"],
         "run_at":    "document_end"
     }],
-    "devtools_page": "devtools/devtools.html"
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com; object-src 'self'"
 }
-
-
