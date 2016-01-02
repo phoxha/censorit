@@ -1,3 +1,12 @@
+// chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
+//   alert("Fire");
+//   if (changeInfo.status == 'complete' && tab.active) {
+
+//     // do your things
+//     alert("Fire");
+//   }
+// })
+
 chrome.extension.onMessage.addListener(function(message, sender, sendResponse) {
     switch(message.type) {
         case "color-divs":

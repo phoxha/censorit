@@ -1,34 +1,117 @@
-// popup.js
-
 
 
 window.onload = function() {
 
+setColor();
 
-	document.body.onload = function() {
-	alert("get");
-  chrome.storage.sync.get("data", function(items) {
-    if (!chrome.runtime.error) {
-      console.log(items);
-      document.getElementById("data").innerText = items.data;
-    }
-  });
+function setColor(){
+	document.body.style.backgroundColor='lightgreen';
+	alert ("The document has been loaded.");
 }
 
-document.getElementById("set").onclick = function() {
+
+	// // popup.js
+	// document.body.onload = function() {
+	// 	alert("get");
+	//   chrome.storage.local.get("data", function(items) {
+	//     if (!chrome.runtime.error) {
+	//       console.log(items);
+	//       document.getElementById("data").innerText = items.data;
+	//     }
+	//     else
+	//     {
+	//     	alert("got it!");
+	//     }
+	//   });
+	// }
 	
-  var d = document.getElementById("text").value;
-  chrome.storage.sync.set({ "data" : d }, function() {
-    if (chrome.runtime.error) {
-      console.log("Runtime error.");
-    }
-    else
-    {
-    	alert("saved!");
-    }
-  });
-  window.close();
-}
+	document.getElementById("clear").onclick = function() {
+
+		chrome.storage.local.clear()
+		var storage = chrome.storage.local;
+		var	prevArray = [];
+		var myTestVar = 'Keyword';
+		var obj= {};
+		prevArray =[{name:"test", status:"1"}];
+
+		obj[myTestVar]=prevArray;
+		storage.set(obj);
+
+
+		document.getElementById("settings").innerHTML="";
+	}
+
+	document.getElementById("set").onclick = function() {
+
+		//alert("1");
+		var storage = chrome.storage.local;
+		//chrome.storage.local.clear()
+		var d = document.getElementById("text").value;
+		var myTestVar = 'Keyword';
+		var resultvalue = {};
+		var obj= {};
+		var objPrev= {};
+		
+		//obj[myTestVar] = d;
+		var oldvalue="";
+		storage.get(myTestVar,function(result){
+				  //objPrev[myTestVar]=result;
+				  objPrev=result;
+				  //console output = myVariableKeyName {myTestVar:'my test var'}
+				});
+		//populate
+		var	prevArray = [];
+		//prevArray =[{name:"test", status:"1"}];
+		
+		 // if(jQuery.isEmptyObject(objPrev))
+		 // {
+			
+		 // }
+		 // else{
+		 	prevArray = objPrev[myTestVar];
+		 	//}
+		
+		
+		//var text = [];
+
+		prevArray.push({name:d, status:"1"});
+		obj[myTestVar]=prevArray;
+
+		//clear storage
+		//obj= {};
+		storage.set(obj);
+
+		
+		storage.get(myTestVar,function(result){
+		  //alert(myTestVar,result);
+		  prevArray = objPrev[myTestVar];
+		});
+		var par = "";
+		  prevArray.forEach(function(entry) {
+		    par += entry.name + " " + entry.status + ", ";
+		});
+
+		  document.getElementById("settings").innerHTML = par;
+
+
+
+		// var storage = chrome.storage.local;
+	 //  var d = document.getElementById("text").value;
+	 //  //alert(d);
+	 //  storage.set({ "data" : d }, function() {
+	 //  	alert("saved!11");
+	 //    if (chrome.runtime.error) {
+	 //      console.log("Runtime error.");
+	 //    }
+	 //    else
+	 //    {
+	 //    	alert("saved!");
+	 //    }
+	 //  });
+	 //  window.close();
+	}
+
+	//old script
     document.getElementById("button").onclick = function() {
         chrome.extension.sendMessage({
             type: "color-divs"

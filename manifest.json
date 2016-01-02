@@ -2,6 +2,7 @@
 {
  "name": "censorit",
     "version": "0.0.1",
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
     "manifest_version": 2,
     "description" : "Description ...",
     "omnibox": { "keyword" : "yeah" },
@@ -10,7 +11,7 @@
         "default_title": "That's the tool tip",
         "default_popup": "popup.html"
     },
-    "permissions": [ "storage" ],
+    "permissions": [ "storage" ,"tabs"],
     "background": {
         "scripts": ["background.js"],
         "persistent": false
