@@ -13,28 +13,7 @@
 chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
   if (changeInfo.status == 'complete' && tab.active) {
 
-    // do your things
-    alert("aha!!");
-
-    alert("a");
-    var scope = angular.element($("#outer")).scope();
-    scope.$apply(function(){
-        scope.msg = 'Superhero';
-    })
-
-    var elem = angular.element(document.querySelector('[ng-app]'));
-    var injector = elem.injector();
-     var $rootScope = injector.get('$rootScope');  
-
-     alert($rootScope.todoStorage.data); 
-     
-     // $rootScope.$apply(function(){
-     //   $rootScope.text = new Date();
-     // });
-
-
-
-    chrome.tabs.sendMessage(tab.id, {args: _this.data}, function(response) {
+    chrome.tabs.sendMessage(tab.id, {args: "someword"}, function(response) {
       // ...
     });
 

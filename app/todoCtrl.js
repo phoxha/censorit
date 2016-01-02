@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app').controller('todoCtrl', function ($scope, todoStorage) {
+angular.module('app').controller('todoCtrl', function ($scope, $rootScope,todoStorage) {
 
     $scope.todoStorage = todoStorage;
 
