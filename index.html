@@ -11,10 +11,12 @@
     <p>Hide content based on words or phrases you really dislike (i.e. "Snooki").</p>
         <div class='row'>
             <div class='col-md-12'>
-                <h5>{{ (todoList | filter: {completed:false}).length}} entry(s)</h5>
+                <h5>{{ (todoList | filter: {completed:false}).length}} entry(s) enabled </h5>
                 <form id='todo-form' ng-submit='add()'>
                     <div class="form-group">
                         <input type='text' id='new-todo' ng-model='newContent' class="form-control" placeholder="Add words that you want to censor!"/>
+                        <div id='removed'>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -48,5 +50,6 @@
     <script type="text/javascript" src="app/app.js"></script>
     <script type="text/javascript" src="app/todoCtrl.js"></script>
     <script type="text/javascript" src="app/todoStorage.js"></script>
+    <script type="text/javascript" src="index.js"></script>
 </body>
 </html>

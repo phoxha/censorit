@@ -1,51 +1,50 @@
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    //sendResponse(myFunc(request.args));
+var keywords = JSON.parse(request.args);
+            var num = 0;
+            var arr = [];
 
-     //alert(request.args);
-        var obj = [];
-     chrome.storage.sync.get('todo', function(keys) {
-            if (keys.todo != null) {
-                obj = keys.todo;
-                //alert("inside:" + obj);
-            }
-        });
-        //alert(obssssj);
-        obj.forEach(function(entry) {
+        keywords.forEach(function(entry) {
+           
             if(!entry.completed)
             {
-                alert(entry.content);
-                $(':contains('+entry.content+'):not(:has(*))').hide();
-                $("img[alt*='"+entry.content+"']").hide();
+                arr.push(entry.content);
+
+                        //todo not counting correctly
+                        $('*:contains("'+entry.content+'")').each(function (idx, elem) {
+                            num++; 
+                            //var changed = $(elem).html().replace('cheese', 'cheese <b>is fantastic</b>');
+                            //$(elem).html(changed);
+                        });
+                            //as user provided it
+                            $(':contains('+entry.content+'):not(:has(*))').hide();
+                            $("img[alt*='"+entry.content+"']").hide();
+                            $('img[src*="'+entry.content+'"]').hide();
+                            $('a[href*="'+entry.content+'"]').hide();
+                            $("p:contains('"+entry.content+"')" ).hide();
+                            $("u:contains('"+entry.content+"')" ).hide();
+                            $("li:contains('"+entry.content+"')" ).hide();
+                            $("a:contains('"+entry.content+"')" ).hide();
+                            $("li:contains('"+entry.content+"')" ).hide();
+
+                            //to lower case
+                             $(':contains('+entry.content.toLowerCase()+'):not(:has(*))').hide();
+                            $("img[alt*='"+entry.content.toLowerCase()+"']").hide();
+                            $('img[src*="'+entry.content.toLowerCase()+'"]').hide();
+                            $('a[href*="'+entry.content.toLowerCase()+'"]').hide();
+                            $("p:contains('"+entry.content.toLowerCase()+"')" ).hide();
+                            $("u:contains('"+entry.content.toLowerCase()+"')" ).hide();
+                            $("li:contains('"+entry.content.toLowerCase()+"')" ).hide();
+                            $("a:contains('"+entry.content.toLowerCase()+"')" ).hide();
+                            $("li:contains('"+entry.content.toLowerCase()+"')" ).hide();                                    
+                                
+
+                   
+
             }
             
         });
-     
+                 // Save data to sessionStorage
+            sessionStorage.setItem('Removed', arr);
+            var n = num.toString();
+            sendResponse({count: n}); 
 });
-
-
-// chrome.extension.onMessage.addListener(function(message, sender, sendResponse) {
-//     switch(message.type) {
-//         case "color-divs":
-//             var divs = document.querySelectorAll("div");
-//             if(divs.length === 0) {
-//                 alert("There are no any divs in the page.");
-//             } else {
-
-//                 for(var i=0; i<divs.length; i++) {
-//                     divs[i].style.backgroundColor = message.color;
-//                 }
-//             }
-//         break;
-//         case "clear-trump":
-//             $(function() {
-//                 //var foundin = $('*:contains("trump")');
-//                 $(':contains(message.text):not(:has(*))').hide();
-//                 $("img[alt*='message.text']").hide();
-//                 $(':contains(message.text):not(:has(*))').hide();
-//                 $("img[alt*='message.text']").hide();
-                
-//             });
-//         break;
-
-//     }
-// });

@@ -13,9 +13,13 @@
 chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
   if (changeInfo.status == 'complete' && tab.active) {
 
-    chrome.tabs.sendMessage(tab.id, {args: "someword"}, function(response) {
-      // ...
-    });
+    var _this = {};
+    
+        _this = localStorage.getItem('todo');
+        chrome.tabs.sendMessage(tab.id, {args: _this}, function(response) {
+          // ...
+          chrome.browserAction.setBadgeText({text: response.count});
+        });
 
   }
 })

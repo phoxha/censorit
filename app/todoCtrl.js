@@ -1,9 +1,10 @@
 'use strict';
 
-angular.module('app').controller('todoCtrl', function ($scope, $rootScope,todoStorage) {
+angular.module('app').controller('todoCtrl', function ($scope,todoStorage) {
 
     $scope.todoStorage = todoStorage;
 
+                                     
     $scope.$watch('todoStorage.data', function() {
         $scope.todoList = $scope.todoStorage.data;
     });

@@ -3,7 +3,7 @@
   "name"            : "Censorite",
   "description"     : "Block undesired content.",
   "short_name"      : "Censorite",
-  "version"         : "0.1",
+  "version"         : "1.1",
   "browser_action": {
     "default_popup": "index.html",
     "default_icon" : "images/logo.png"
